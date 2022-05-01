@@ -1,0 +1,122 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Search{% endblock %}
+{% load staticfiles %}
+{% block body %}
+<style>.butn {
+    border: none;
+    padding: 10px;
+    margin: 20px auto;
+    width: 50%;
+    height: 45px;
+    display: block;
+    background: #FEA88D;
+    color: #fff;
+    font-size: 1.3em;
+    letter-spacing: 0.1em;
+    box-shadow: 1px 3px 20px rgba(17, 17, 17, 0.1);
+    border-radius: 3px;
+    outline: none;
+  }</style>
+<p>
+  <div >
+    <div class="panel-body">
+      <center><h2 style="color: #dd5; display:block; font-size: 30px;font-weight: 400;">Search</h2><br /></center>
+      <form class="search-container" action="" method="GET" enctype="multipart/form-data">
+        <div>
+          <select name="location" class="form-control" type="text" id="search-bar" required>
+            <option value="" selected="selected">Location</option>
+            {% for location in locations %}
+              <option value="{{ location }}">{{ location }}</option>
+            {% endfor %}
+          </select>
+          <br />
+          <div class="form-group">
+            <center><button class="butn">Search</button></center>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div style="background-color:rgba(34, 3, 9, 0.6);">
+    {% if hotels %}
+      <ul id="results">
+        {% for hotel in hotels %}
+        <li>
+            <div class="book-module">
+              <div class="inner">
+            
+                <div class="top">
+                  <div class="inner">
+            
+                    <div class="logo-container">
+                      <h3>{{ hotel.name }}</h3>
+                      <p>{{ location }}</p>
+                      <button class="btn" onclick="location.href='{% url 'hotels:room-list' hotel.id %}';">View Rooms</button>
+                    </div>
+            
+                  </div>
+                </div>
+            
+            
+                <div class="bottom">
+                  <div class="inner">
+                    <div class="localAndHours">
+                      <div>
+                        <span class="floatL"><i class="size fa fa-phone" aria-hidden="true"></i></span>
+                        <span class="floatR">  {{ hotel.contact }}</br> </span>
+                      </div>
+            
+                      <div>
+                        <span class="floatL"><i class="size fa fa-envelope" aria-hidden="true"></i></span>
+                        <span class="floatR">  {{ hotel.email }}</br> </span>
+                      </div>
+                      <br />
+                      <div>
+                        <span class="floatL"><i class="size fa fa-map-marker " aria-hidden="true"></i></span>
+                        <span class="floatR">  {{ hotel.address }}</br> </span>
+                      </div>
+                      <br />
+                      <div>
+                        <span class="floatL"><i class="size fa fa-star" aria-hidden="true"></i></span>
+                        <span class="floatR"><b>  Rating: <span id="stars{{ forloop.counter }}"></span></b></br> </span>
+                      </div>
+                      
+                      <script>
+                        document.getElementById("stars{{ forloop.counter }}").innerHTML = getStars("{{ hotel.rating }}");
+                          function getStars(rating) {
+
+                            // Round to nearest half
+                            rating = Math.round(rating * 2) / 2;
+                            let output = [];
+
+                            // Append all the filled whole stars
+                            for (var i = rating; i >= 1; i--)
+                              output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                            // If there is a half a star, append it
+                            if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                            // Fill the empty stars
+                            for (let i = (5 - rating); i >= 1; i--)
+                              output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                            return output.join('');
+
+                          }
+                      </script>
+                    </div>
+            
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <hr>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+  
+</p>
+{% endblock %}

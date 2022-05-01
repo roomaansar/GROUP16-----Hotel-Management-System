@@ -1,0 +1,12 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Signup{% endblock %}
+{% block body %}
+<div style="align-content: center;width:100%;padding-left: 20%;padding-right: 20%">
+<h2 style="align-content: center;width:100%;padding-left: 7%;padding-right: 5%;color: lavenderblush">Sign up for a free account</h2><br />
+<p class="lead" style="color: aqua">Select below the type of account you want to create</p>
+<div style="align-content: center;width:100%;padding-left: 10%;padding-right: 10%">
+<a href="{% url 'accounts:customer_signup' %}" class="btn btn-student btn-lg" role="button" style="color: blanchedalmond">I'm a Customer</a>
+<a href="{% url 'accounts:manager_signup' %}" class="btn btn-teacher btn-lg" role="button" style="color: blanchedalmond">I'm a Manager</a>
+</div>
+</div>
+{% endblock %}

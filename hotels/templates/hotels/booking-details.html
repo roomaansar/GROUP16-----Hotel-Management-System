@@ -1,0 +1,176 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Booking Details{% endblock %}
+{% block body %}
+<style>
+.btn {
+        border: none;
+        padding: 10px;
+        margin: 20px auto;
+        width: 30%;
+        height: 45px;
+        display: block;
+        background: #FEA88D;
+        color: #fff;
+        font-size: 1.3em;
+        letter-spacing: 0.1em;
+        box-shadow: 1px 3px 20px rgba(17, 17, 17, 0.1);
+        border-radius: 3px;
+        outline: none;
+}
+</style>
+        {% if request.user.is_superuser or booking.customer == request.user or booking.room.hotel == request.user.hotel %}
+            <!-- <div class="container" style="background-color: rgba(249, 249, 249, 0.835); opacity:1"> -->
+            <center><h1 style="color: #dd5;">Booking Details</h1>
+                <table class="rwd-table">
+                    <tr>
+                        <th>Booking ID</th>
+                        <td>{{ booking.pk }}</td>
+                    </tr>
+                    <tr>
+                        <th>To</th>
+                        <td>{{ booking.room.hotel.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Room Type</th>
+                            <td>{{ booking.room.type_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Occupancy</th>
+                            <td>{{ booking.room.occupancy }}</td>
+                    </tr>
+                    <tr>
+                        <th>Room Type</th>
+                        <td>{{ booking.room.room_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Check-In</th>
+                        <td>{{ booking.begin_time }}</td>
+                    </tr>
+                    <tr>
+                        <th>Check-out</th>
+                        <td>{{ booking.end_time }}</td>
+                    </tr>
+                    <tr>
+                        <th>Amount</th>
+                        <td>{{ booking.amount }}</td>
+                    </tr>
+                    <tr>
+                        <th>Number of Rooms</th>
+                        <td>{{ booking.num_rooms }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Rating</th>
+                        <td>
+
+                                <fieldset class="rating">
+                                        <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                                        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                                    </fieldset>
+
+                                    <script>
+                                        if({{ booking.user_rating }} == 1)
+                                            $('#star1')[0].checked = true
+                                        else if({{ booking.user_rating }} == 2)
+                                            $('#star2')[0].checked = true
+                                        else if({{ booking.user_rating }} == 3)
+                                            $('#star3')[0].checked = true
+                                        else if({{ booking.user_rating }} == 4)
+                                            $('#star4')[0].checked = true
+                                        else if({{ booking.user_rating }} == 5)
+                                            $('#star5')[0].checked = true
+                                    </script>
+
+                                    <style>
+                                        .rating {
+                                            float:left;
+                                        }
+
+                                        /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+                                        follow these rules. Every browser that supports :checked also supports :not(), so
+                                        it doesn’t make the test unnecessarily selective */
+                                        .rating:not(:checked) > input {
+                                            position:absolute;
+                                            top:-9999px;
+                                            clip:rect(0,0,0,0);
+                                        }
+
+                                        .rating:not(:checked) > label {
+                                            float:right;
+                                            width:1em;
+                                            padding:0 .1em;
+                                            overflow:hidden;
+                                            white-space:nowrap;
+                                            cursor:pointer;
+                                            font-size:200%;
+                                            line-height:1.2;
+                                            color:#ddd;
+                                            text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+                                        }
+
+                                        .rating:not(:checked) > label:before {
+                                            content: '★ ';
+                                        }
+
+                                        .rating > input:checked ~ label {
+                                            color: #f70;
+                                            text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+                                        }
+
+                                        .rating:not(:checked) > label:hover,
+                                        .rating:not(:checked) > label:hover ~ label {
+                                            color: gold;
+                                            text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+                                        }
+
+                                        .rating > input:checked + label:hover,
+                                        .rating > input:checked + label:hover ~ label,
+                                        .rating > input:checked ~ label:hover,
+                                        .rating > input:checked ~ label:hover ~ label,
+                                        .rating > label:hover ~ input:checked ~ label {
+                                            color: #ea0;
+                                            text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+                                        }
+
+                                        .rating > label:active {
+                                            position:relative;
+                                            top:2px;
+                                            left:2px;
+                                        }
+                                    </style>
+                                        
+                        </td>
+                    </tr>
+                </table>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                            <input id="rating" name="rating" hidden />
+                            <center><button class="btn" onclick="getStars(event)">Rate your Stay</button></center>
+
+                            <script>
+                                function getStars(e) {                                    
+                                    if($('#star5')[0].checked)
+                                        $('#rating').val('5');
+                                    if($('#star4')[0].checked)
+                                        $('#rating').val('4');
+                                    if($('#star3')[0].checked)
+                                        $('#rating').val('3');
+                                    if($('#star2')[0].checked)
+                                        $('#rating').val('2');
+                                    if($('#star1')[0].checked)
+                                        $('#rating').val('1');
+                                }
+
+                            </script>
+                        </div>
+                    </form>
+        {% else %}
+              </center>
+
+            <p>You are not authorized to view this page!</p>
+        {% endif %}
+{% endblock %}

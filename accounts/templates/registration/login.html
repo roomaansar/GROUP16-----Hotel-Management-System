@@ -1,0 +1,89 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Login{% endblock %}
+{% block body %}
+<div style="align-content: center;">
+  <style>
+    #form-main{
+    width:100%;
+    float:left;
+    padding-top:0px;
+  }
+
+  #form-div {
+    background-color:rgba(209, 30, 7, 0.2);
+    padding-left:35px;
+    padding-right:35px;
+    padding-top:35px;
+    padding-bottom:50px;
+    width: 550px;
+    float: left;
+    left: 48%;
+    margin: 60px auto;
+    position: absolute;
+    margin-top:30px;
+    margin-left: -260px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn {
+    border-radius: 5px;
+    padding: 10px 35px;
+    font-size: 22px;
+    text-decoration: none;
+    margin: 20px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+  }
+
+  .btn:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+  }
+
+  .red {
+    background-color:rgb(235, 53, 8);
+    box-shadow: 0px 5px 0px 0px rgba(195, 35, 8);
+  }
+
+  .red:hover {
+    background-color: rgba(185, 35, 8);
+  }
+</style>
+
+{% load crispy_forms_tags %}
+
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {% for error in form.non_field_errors %}
+        <p>{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+      {% endfor %}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div style="align-content: center;width:100%;padding-left: 25%;padding-right: 25%">
+      <h2 style="align-content: center;width:100%;padding-left: 40%;padding-right: 30%; color: blanchedalmond">Log in</h2>
+      <div id="form-main" style="color: azure">
+        <div id="form-div">
+      <form method="post" novalidate style=width:100%>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {{ form.username|as_crispy_field }}
+        {{ form.password|as_crispy_field }}
+        <center><button type="submit" class="btn red">Log in</button></center>
+      </form>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

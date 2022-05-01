@@ -1,0 +1,11 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Hotel Details{% endblock %}
+{% block body %}
+
+<h1>{{ hotel.name }}</h1>
+
+<p><strong>Location</strong> {{ hotel.location }}</p>
+<p><strong>Contact:</strong> {{ hotel.contact }}</p>
+<p><strong>Email:</strong> {{ hotel.email }}</p>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Room List{% endblock %}
+{% block body %}
+{% load staticfiles %}
+<h1 style="color: #dd5;">Rooms List</h1>
+{% if rooms_list %}
+<div class="theme-item-page-rooms-table _p-30 _bg-w _mb-mob-30">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Room type</th>
+          <th>Max</th>
+          <th>Options</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for room in rooms_list %}
+        <tr>
+          <td class="theme-item-page-rooms-table-type">
+            <h5 class="theme-item-page-rooms-table-type-title">{{ room }}</h5>
+            {% if room.room_type == "Non A/C(Non Air Conditioned)"  %}
+            {% if room.occupancy == "SINGLE" %}
+
+             <img class="theme-item-page-rooms-table-type-img" src="{% static 'hotels/images/hotel-page/rooms/1.jpg'%}" alt="Image Alternative text" title="Image Title"/>
+            {% endif %}
+            
+            {% if  room.occupancy == "DOUBLE" %}
+            <img class="theme-item-page-rooms-table-type-img" src="{% static 'hotels/images/hotel-page/rooms/2.jpg' %}" alt="Image Alternative text" title="Image Title"/>
+            {% endif %}
+            {% endif %}
+            {% if room.room_type == "A/C(Air Conditioned)"  %}
+            {% if room.occupancy == "SINGLE" %}
+            <img class="theme-item-page-rooms-table-type-img" src="{% static 'hotels/images/hotel-page/rooms/3.jpg' %}" alt="Image Alternative text" title="Image Title"/>
+            {% endif %}
+            {% if  room.occupancy == "DOUBLE" %}
+            <img class="theme-item-page-rooms-table-type-img" src="{% static 'hotels/images/hotel-page/rooms/4.jpg' %}" alt="Image Alternative text" title="Image Title"/>
+            {% endif %}
+            {% endif %}
+            <ul class="theme-item-page-rooms-table-type-feature-list">
+              <li>
+                    <i class="fa fa-shower theme-item-page-rooms-table-type-feature-list-icon"></i><b>{{ room.hotel }}</b>
+              </li>
+              <li>
+                <i class="fa fa-bed theme-item-page-rooms-table-type-feature-list-icon"></i>{{ room.occupancy }}
+              </li>
+              <li>
+                <i class="fa fa-arrows-h theme-item-page-rooms-table-type-feature-list-icon"></i>{{ room.type_name }}
+              </li>
+              <li>
+                  <i class="fa fa-arrows-h theme-item-page-rooms-table-type-feature-list-icon"></i>{{ room.room_type }}
+                </li>
+            </ul>
+          </td>
+          <td>
+            <ul class="theme-item-page-rooms-table-guests-count">
+              {% if room.occupancy == "SINGLE" %}
+              <li>
+                <i class="fa fa-male"></i>
+              </li>
+              {% else %}
+              <li>
+                  <i class="fa fa-male"></i>
+              </li>
+              <li>
+                  <i class="fa fa-male"></i>
+              </li>
+              {% endif %}
+            </ul>
+          </td>
+          <td>
+            <ul class="theme-item-page-rooms-table-options-list">
+              <li>Non-refundable</li>
+              <li>Special conditions,
+                <br/>pay when you stay
+              </li>
+            </ul>
+          </td>
+          <td class="theme-item-page-rooms-table-price">
+            <div>
+              <div class="theme-item-page-rooms-table-price-night">
+                <p class="theme-item-page-rooms-table-price-night-amount">₹{{ room.cost }}</p>
+                <p class="theme-item-page-rooms-table-price-sign">Per night</p>
+              </div>
+            </div>
+            <p class="theme-item-page-rooms-table-price-note">* T&C Apply
+            </p>
+          </td>
+          <td>
+            <a class="btn btn-primary-inverse btn-block" onclick="location.href='{% url 'hotels:booking-create' %}?hotel_id={{ room.hotel.id }}&room_id={{ room.id }}';">Book now</a>
+            <p class="theme-item-page-rooms-table-booking-note">No booking or
+              <br/>credit card fees!
+            </p>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+<p>There are no rooms.</p>
+{% endif %}   
+
+{% endblock %}

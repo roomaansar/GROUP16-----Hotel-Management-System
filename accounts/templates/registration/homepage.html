@@ -1,0 +1,61 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Home{% endblock %}
+{% load staticfiles %}
+{% block body %}
+<style>
+.slider-text {
+  height: auto;
+  min-height: 700px;
+  width: 100%;
+}
+.slider-text > .slider-text-inner {
+  display: table-cell;
+  vertical-align: middle;
+  min-height: 700px;
+  position: relative;
+}
+.slider-text > .slider-text-inner h2 {
+  font-size: 60px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 60px;
+}
+
+.slider-text > .slider-text-inner p {
+  margin-bottom: 30px;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 7px 0;
+}
+.slider-text > .slider-text-inner p > span {
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+
+</style>
+<div class="container">
+		   			<div class="col-md-12 col-md-offset-0 text-center slider-text">
+		   				<div class="slider-text-inner js-fullheight">
+		   					<div class="desc">
+		   						<p style="color:white"><span>Sabaat</span></p>
+		   						<h2 style="text-transform:capitalize">Make Your Vacations Comfortable</h2>
+		   					</div>
+		   				</div>
+		   			</div>
+		   		</div>
+<!-- <div class="row" style="width: 100%">
+        <div style="align-content: center;width:100%;padding-left: 5%;padding-right: 0%">
+<center><h3 style="color:blanchedalmond;font-size:40px;align-content: center;padding-left: 25%;padding-right: 25%"><br />
+    Welcome to
+</h3></center>
+
+<center><br /><span style="color:azure;font-size:50px;align-content: center;padding-left: 15%;padding-right: 15%;font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">
+    HOTEL BOOKING SYSTEM
+</span></center>
+
+</div>
+</div> -->
+{% endblock %}

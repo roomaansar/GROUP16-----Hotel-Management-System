@@ -1,0 +1,80 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Hotel Details{% endblock %}
+{% block body %}
+{% load staticfiles %}
+<h1 style="color: #dd5;">Hotels List</h1>
+{% if hotels_list %}
+<div class="theme-item-page-rooms-table _p-30 _bg-w _mb-mob-30">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Contact</th>
+          <th>Ratings</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        
+
+      {% for hotel in hotels_list %}
+        <tr onclick="location.href='{% url 'hotels:room-list' hotel.id %}';">
+          <td class="theme-item-page-rooms-table-type">
+            <h5 class="theme-item-page-rooms-table-type-title">{{ hotel.name }}</h5>
+            <img id="img{{ hotel.pk }}" class="theme-item-page-rooms-table-type-img" src="/static/hotels/images/hotels/0.jpg" alt="Image Alternative text" title="Image Title"/>
+            <script>
+                var num = ({{ hotel.pk }} % 5) + 1;
+                var source = "/static/hotels/images/hotels/" + num + ".jpg";
+                document.getElementById("img{{ hotel.pk }}").src = source;
+            </script>
+          </td>
+          <td>
+            <h5 class="theme-item-page-rooms-table-type-title">{{hotel.location}}</h5>
+            
+          </td>
+          <td>
+              <h5 class="theme-item-page-rooms-table-type-title">Phone No:{{hotel.contact}}</h5>
+              <h5 class="theme-item-page-rooms-table-type-title">Email ID:{{hotel.email}}</h5>
+              
+          </td>
+          <td>
+              <span class="floatR"><b>  Rating: <span id="stars{{ forloop.counter }}"></span></b></br> </span>
+          </td>
+            
+            <script>
+              document.getElementById("stars{{ forloop.counter }}").innerHTML = getStars("{{ hotel.rating }}");
+                function getStars(rating) {
+
+                  // Round to nearest half
+                  rating = Math.round(rating * 2) / 2;
+                  let output = [];
+
+                  // Append all the filled whole stars
+                  for (var i = rating; i >= 1; i--)
+                    output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                  // If there is a half a star, append it
+                  if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                  // Fill the empty stars
+                  for (let i = (5 - rating); i >= 1; i--)
+                    output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                  return output.join('');
+
+                }
+            </script>
+          
+          
+         
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+<p>There are no hotels.</p>
+{% endif %}   
+
+{% endblock %}

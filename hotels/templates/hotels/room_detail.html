@@ -1,0 +1,14 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Room Details{% endblock %}
+{% block body %}
+
+<a href="{{ room.hotel.get_absolute_url }}"><h1>{{ room.hotel }}</h1></a>
+
+<p><strong>Hotel:</strong> {{ room.hotel.id }}</p>
+<p><strong>Type:</strong> {{ room.type_name }}</p>
+<p><strong>Occupancy:</strong> {{ room.occupancy }}</p>
+<p><strong>A/C:</strong> {{ room.room_type }}</p>
+<p><strong>Available:</strong> {{ room.available }}</p>
+<p><strong>Cost:</strong> {{ room.cost }}</p>
+<button class="button-three" onclick="location.href='{% url 'hotels:booking-create' %}?hotel_id={{ room.hotel.id }}&room_id={{ room.id }}';">Book</button>
+{% endblock %}
